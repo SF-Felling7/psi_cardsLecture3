@@ -51,7 +51,7 @@ var deck = [
   { number: 11, suit: 'clubs' },
   { number: 12, suit: 'clubs' },
   { number: 13, suit: 'clubs' }
-]
+];
 
 $( document ).ready( function(){
   $( '#drawCardFromBottom' ).on( 'click', function(){
@@ -60,8 +60,9 @@ $( document ).ready( function(){
     // empty div
     clearTable();
     // append the last card to the div (place on table)
-    $( '#allCards' ).append( "<div class='card " + deck[ deck.length-1 ].suit + "' data-number='" + deck[ deck.length-1 ].number + "'>" + deck[ deck.length-1 ].number + "</div>" );
-    // example block
+    // $( '#allCards' ).append( "<div class='card " + deck[ deck.length-1 ].suit + "' data-number='" + deck[ deck.length-1 ].number + "'>" + deck[ deck.length-1 ].number + "</div>" );
+    // // example block
+    appendCard(deck[deck.length-1]);
     // <div class='card spades' data-number='10'>10</div>
   }); // end drawCardFromBottom
 
@@ -71,14 +72,23 @@ $( document ).ready( function(){
     // empty allCards
     clearTable();
     // append to allCards this card
-    $( '#allCards' ).append( "<div class='card " + deck[0].suit + "' data-number='" + deck[0].number + "'>" + deck[0].number + "</div>" );
-
+    // $( '#allCards' ).append( "<div class='card " + deck[0].suit + "' data-number='" + deck[0].number + "'>" + deck[0].number + "</div>" );
+      appendCard(deck[0]);
     // example block
     // <div class='card diamonds' data-number='3'>3</div>
   }); // end drawCardFromTop
 
   $( '#drawRandomCard' ).on( 'click', function(){
     console.log( 'in drawRandomCard');
+
+    var someNumber = Math.floor(Math.random() * deck.length);
+    console.log(someNumber);
+    console.log(deck[someNumber]);
+    clearTable();
+
+    appendCard(deck[someNumber]);
+
+
   }); // end drawRandomCard
 
   $( '#hideAll' ).on( 'click', function(){
@@ -99,6 +109,14 @@ $( document ).ready( function(){
 
   $( '#shuffleDeck' ).on( 'click', function(){
     console.log( 'in shuffleDeck');
+    clearTable();
+    var emptyArray = [];
+    for (var i = 0; i < deck.length; i++) {
+      var randomNumber = Math.floor(Math.random()* deck.length);
+      var randomCard = deck[randomNumber];
+      emptyArray.push(randomCard);
+    }
+    deck = emptyArray;
   }); // end shuffleDeck
 }); // end doc  ready
 
@@ -115,3 +133,9 @@ var clearTable = function(){
   // empty allCards by id
   $( '#allCards' ).empty();
 }; // end clearTable
+
+
+var appendCard = function(card){
+  $( '#allCards' ).append( "<div class='card " + card.suit + "' data-number='" + card.number + "'>" + card.number + "</div>" );
+
+};
